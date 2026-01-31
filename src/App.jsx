@@ -394,10 +394,10 @@ function App() {
     <HelmetProvider>
       <>
         <Helmet>
-          <title>Farmacia Salud Total - Tu farmacia de confianza online</title>
-          <meta name="description" content="Farmacia Salud Total ofrece medicamentos, vitaminas y servicios de salud con los mejores precios y atención personalizada. Compra online con descuentos exclusivos." />
+          <title>Farmacia Angels - Tu farmacia de confianza online</title>
+          <meta name="description" content="Farmacia Angels ofrece medicamentos, vitaminas y servicios de salud con los mejores precios y atención personalizada. Compra online con descuentos exclusivos." />
         </Helmet>
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-300 to-white">
           <Header
             user={profile}
             cartItemsCount={cartItemsCount}

@@ -1,92 +1,124 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Stethoscope, Activity, Thermometer, Scale, Eye, Calendar } from 'lucide-react';
+import { Heart, Stethoscope, Activity, Thermometer, Scale, Eye, Calendar, ArrowRight, MessageCircle } from 'lucide-react';
 import { Button, toast } from '@/components/ui';
 
 const ServicesSection = () => {
   const services = [
     {
       id: 1,
-      name: 'Medición de Presión Arterial',
-      description: 'Control profesional de presión arterial con equipos calibrados',
+      name: 'Presión Arterial',
+      description: 'Monitoreo preciso con equipos digitales calibrados.',
       price: 15.00,
       duration: '15 min',
       icon: Heart,
-      color: 'from-red-500 to-pink-500'
+      bgIcon: 'bg-rose-50',
+      textIcon: 'text-rose-600',
+      borderColor: 'group-hover:border-rose-200'
     },
     {
       id: 2,
       name: 'Control de Glucosa',
-      description: 'Medición rápida y precisa de niveles de glucosa en sangre',
+      description: 'Resultados inmediatos para tu seguimiento diario.',
       price: 12.00,
       duration: '10 min',
       icon: Activity,
-      color: 'from-blue-500 to-cyan-500'
+      bgIcon: 'bg-sky-50',
+      textIcon: 'text-sky-600',
+      borderColor: 'group-hover:border-sky-200'
     },
     {
       id: 3,
-      name: 'Medición de Temperatura',
-      description: 'Control de temperatura corporal con termómetros digitales',
+      name: 'Temperatura',
+      description: 'Medición corporal rápida con tecnología infrarroja.',
       price: 8.00,
       duration: '5 min',
       icon: Thermometer,
-      color: 'from-orange-500 to-yellow-500'
+      bgIcon: 'bg-orange-50',
+      textIcon: 'text-orange-600',
+      borderColor: 'group-hover:border-orange-200'
     },
     {
       id: 4,
-      name: 'Control de Peso y Talla',
-      description: 'Medición precisa de peso corporal y estatura',
+      name: 'Peso y Talla',
+      description: 'Evaluación de índice de masa corporal (IMC).',
       price: 10.00,
       duration: '10 min',
       icon: Scale,
-      color: 'from-green-500 to-teal-500'
+      bgIcon: 'bg-emerald-50',
+      textIcon: 'text-emerald-600',
+      borderColor: 'group-hover:border-emerald-200'
     },
     {
       id: 5,
-      name: 'Consulta Farmacéutica',
-      description: 'Asesoría profesional sobre medicamentos y tratamientos',
+      name: 'Asesoría Farmacéutica',
+      description: 'Guía profesional sobre tus tratamientos y dosis.',
       price: 25.00,
       duration: '30 min',
       icon: Stethoscope,
-      color: 'from-purple-500 to-indigo-500'
+      bgIcon: 'bg-indigo-50',
+      textIcon: 'text-indigo-600',
+      borderColor: 'group-hover:border-indigo-200'
     },
     {
       id: 6,
-      name: 'Examen Visual Básico',
-      description: 'Evaluación básica de agudeza visual',
+      name: 'Salud Visual',
+      description: 'Descarte básico de agudeza visual rápida.',
       price: 20.00,
       duration: '20 min',
       icon: Eye,
-      color: 'from-teal-500 to-blue-500'
+      bgIcon: 'bg-cyan-50',
+      textIcon: 'text-cyan-600',
+      borderColor: 'group-hover:border-cyan-200'
     }
   ];
 
-  const handleBookService = (service) => {
+  const handleBookService = (serviceName) => {
     toast({
-      title: "🚧 Esta función no está implementada aún",
-      description: "¡Pero no te preocupes! Puedes solicitarla en tu próximo !"
+      title: "Servicio seleccionado",
+      description: `Has solicitado agendar: ${serviceName}. Te redirigiremos a WhatsApp.`,
     });
+    setTimeout(() => {
+        const phoneNumber = '51958292145';
+        const message = `Hola, quisiera agendar el servicio de: ${serviceName}`;
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, '_blank');
+    }, 1500);
   };
 
   return (
-    <section id="servicios" className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section id="servicios" className="relative pt-32 pb-24 bg-slate-100 overflow-hidden">
+      
+      {/* --- SEPARADOR VISUAL (OLA) --- */}
+      {/* Esto crea el corte visual con la sección anterior (que asumimos es blanca) */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-[calc(100%+1.3px)] h-[60px] md:h-[100px]">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-white"></path>
+        </svg>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        
+        {/* Header de la sección */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Servicios de Salud
+          
+
+          <h2 className="text-3xl md:text-5xl font-bold text-slate-800 mb-6 tracking-tight">
+            Nuestros Servicios 
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Además de medicamentos, ofrecemos servicios profesionales para cuidar tu salud
+          <p className="text-lg text-slate-500 max-w-2xl mx-auto font-light leading-relaxed">
+            Hemos creado este espacio dedicado para tu bienestar. 
+            <br className="hidden md:block"/> Atención rápida, segura y con los más altos estándares.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-3 gap-8">
+        {/* Grid de Servicios */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
@@ -95,73 +127,86 @@ const ServicesSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group"
+                transition={{ delay: index * 0.05 }}
+                // Fondo blanco puro para que contraste con el fondo gris de la sección (bg-slate-100)
+                className={`bg-white rounded-2xl p-8 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 border border-slate-200/60 group ${service.borderColor}`}
               >
-                <div className={`h-32 bg-gradient-to-br ${service.color} relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <IconComponent className="w-12 h-12 text-white" />
+                <div className="flex justify-between items-start mb-6">
+                  <div className={`p-4 rounded-2xl ${service.bgIcon} ${service.textIcon} transition-colors ring-1 ring-inset ring-black/5`}>
+                    <IconComponent className="w-7 h-7" />
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-bold">
-                    {service.duration}
+                  
+                  <div className="bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+                    <span className="text-sm font-bold text-slate-700">S/ {service.price.toFixed(2)}</span>
                   </div>
                 </div>
 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">{service.name}</h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{service.description}</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-indigo-600 transition-colors">
+                    {service.name}
+                </h3>
+                <p className="text-slate-500 text-sm leading-relaxed mb-8 min-h-[40px]">
+                    {service.description}
+                </p>
 
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-green-600">
-                        S/ {service.price.toFixed(2)}
-                      </span>
+                <div className="flex items-center justify-between pt-5 border-t border-slate-50">
+                    <div className="flex items-center text-slate-400 text-xs font-semibold uppercase tracking-wide">
+                        <Calendar className="w-4 h-4 mr-2" />
+                        {service.duration}
                     </div>
-                    <div className="flex items-center text-gray-500 text-sm">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {service.duration}
-                    </div>
-                  </div>
-
-                  <Button
-                    onClick={() => handleBookService(service)}
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3"
-                  >
-                    Agendar Cita
-                  </Button>
+                    
+                    <button 
+                        onClick={() => handleBookService(service.name)}
+                        className="w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-600 hover:text-indigo-600 transition-all group-hover:scale-110"
+                    >
+                        <ArrowRight className="w-4 h-4" />
+                    </button>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Call to Action */}
+        {/* Call to Action - Soft Minimal */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 text-center bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-8"
+          className="mt-24 relative"
         >
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">
-            ¿Necesitas atención personalizada?
-          </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Nuestro equipo de farmacéuticos profesionales está disponible para brindarte
-            la mejor atención y asesoría en salud.
-          </p>
-          <Button
-            size="lg"
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4"
-            onClick={() => {
-              const phoneNumber = '51958292145';
-              const message = 'Hola, me gustaría consultar sobre vuestros servicios y medicamentos.';
-              const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-              window.open(whatsappURL, '_blank');
-            }}
-          >
-            Contactar Farmacéutico
-          </Button>
+          <div className="bg-white rounded-3xl p-8 md:p-12 border border-slate-200 text-center shadow-sm relative overflow-hidden">
+             
+            {/* Decoración de fondo sutil dentro de la tarjeta */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-2 bg-gradient-to-r from-transparent via-slate-200 to-transparent opacity-50"></div>
+
+            <div className="relative z-10">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                <Stethoscope className="w-8 h-8 text-slate-400" />
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-800 mb-3">
+                ¿Necesitas atención personalizada?
+                </h3>
+                
+                <p className="text-slate-500 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+                Nuestro equipo de farmacéuticos está disponible para resolver tus dudas.
+                <span className="block mt-1 text-sm text-slate-400">Sin compromisos, solo asesoría profesional.</span>
+                </p>
+
+                <Button
+                size="lg"
+                className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-8 py-6 rounded-xl shadow-lg shadow-slate-200 transition-all duration-300 group"
+                onClick={() => {
+                    const phoneNumber = '51958292145';
+                    const message = 'Hola, me gustaría consultar sobre vuestros servicios y medicamentos.';
+                    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappURL, '_blank');
+                }}
+                >
+                <MessageCircle className="w-5 h-5 mr-2 text-slate-200 group-hover:text-white transition-colors" />
+                Contactar Farmacéutico
+                </Button>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -58,21 +58,28 @@ const AdminPanel = ({ onClose, onUpdateProduct, onUpdateOrder, onCreateProduct }
         onClick={(e) => e.stopPropagation()}
         className="bg-white rounded-2xl shadow-2xl w-full max-w-7xl h-[90vh] overflow-hidden flex flex-col"
       >
-        {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-bold">Panel de Administración</h2>
-              <p className="text-blue-100 mt-1">Gestiona tu farmacia desde aquí</p>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
+        {/* Header - Diseño Pro Salud */}
+<div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 text-white p-6 shadow-2xl border-b border-emerald-500/30">
+  <div className="flex items-center justify-between">
+    <div>
+      <div className="flex items-center gap-2">
+        <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <h2 className="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-300">
+          Panel de Administración
+        </h2>
+      </div>
+      <p className="text-emerald-100/70 mt-1 font-medium italic">
+        Gestión inteligente para Farmacia Angels
+      </p>
+    </div>
+    <button
+      onClick={onClose}
+      className="group p-2 bg-white/5 hover:bg-emerald-500/20 rounded-xl transition-all duration-300 backdrop-blur-md border border-white/10 hover:border-emerald-400/50"
+    >
+      <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
+    </button>
+  </div>
+</div>
 
         {/* Tabs Navigation */}
         <div className="border-b bg-gray-50 px-6 overflow-x-auto">

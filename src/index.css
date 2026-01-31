@@ -6,7 +6,8 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  @apply bg-gray-50 text-gray-900;
+  @apply text-gray-900;
+  background: linear-gradient(to bottom right, #1f2937, #e5e7eb, #ffffff);
 }
 
 /* Custom scrollbar */
@@ -45,7 +46,7 @@ textarea:focus {
 }
 
 .pharmacy-gradient {
-  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #1f2937 0%, #e5e7eb 50%, #ffffff 100%);
 }
 
 /* Animation classes */

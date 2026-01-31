@@ -8,7 +8,6 @@ const Cart = ({ cart, onClose, onRemoveItem, onUpdateQuantity, user }) => {
 
   const subtotal = cart.reduce((total, item) => {
     let price = item.price;
-    // Aplicar descuento si el usuario tiene membresía
     if (user?.role === 'customer' && user.membershipLevel) {
       const discount = user.membershipLevel === 'gold' ? 0.15 : 0.10;
       price = price * (1 - discount);
@@ -31,7 +30,6 @@ const Cart = ({ cart, onClose, onRemoveItem, onUpdateQuantity, user }) => {
 
     setIsCheckingOut(true);
 
-    // Simular proceso de pago
     setTimeout(() => {
       toast({
         title: "🚧 Esta función no está implementada aún",
@@ -46,7 +44,7 @@ const Cart = ({ cart, onClose, onRemoveItem, onUpdateQuantity, user }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/50 z-50 flex items-center justify-end"
+      className="fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-end backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
@@ -57,35 +55,41 @@ const Cart = ({ cart, onClose, onRemoveItem, onUpdateQuantity, user }) => {
         className="bg-white h-full w-full max-w-md shadow-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="bg-gradient-to-r from-green-600 to-blue-600 text-white p-6">
+        {/* Header - Estilo Farmacia Angels */}
+        <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 text-white p-6 shadow-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <ShoppingBag className="w-6 h-6" />
-              <h2 className="text-xl font-bold">Carrito de Compras</h2>
+              <div className="bg-white/20 p-2 rounded-full backdrop-blur-md">
+                <ShoppingBag className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold tracking-tight">Tu Carrito</h2>
+                <p className="text-indigo-100 text-xs font-medium uppercase tracking-wider">
+                  Farmacia Angels
+                </p>
+              </div>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="text-white hover:bg-white/20"
+              className="text-white hover:bg-white/20 rounded-full transition-colors"
             >
               <X className="w-6 h-6" />
             </Button>
           </div>
-          <p className="text-blue-100 mt-2">
-            {cart.length} {cart.length === 1 ? 'producto' : 'productos'}
-          </p>
         </div>
 
         {/* Cart Items */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {cart.length === 0 ? (
-            <div className="text-center py-12">
-              <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">Tu carrito está vacío</p>
+            <div className="text-center py-20">
+              <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <ShoppingBag className="w-10 h-10 text-indigo-200" />
+              </div>
+              <p className="text-gray-500 text-lg font-medium">Tu carrito está vacío</p>
               <p className="text-gray-400 text-sm mt-2">
-                Agrega productos para comenzar tu compra
+                Explora nuestros productos y ofertas
               </p>
             </div>
           ) : (
@@ -102,75 +106,60 @@ const Cart = ({ cart, onClose, onRemoveItem, onUpdateQuantity, user }) => {
                 return (
                   <motion.div
                     key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-gray-50 rounded-lg p-4 border border-gray-200"
+                    className="group bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all duration-300"
                   >
                     <div className="flex items-start space-x-4">
-                      <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+                      <div className="w-20 h-20 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-100">
                         <img
-                          className="w-full h-full object-contain p-1"
-                          alt={`${item.name} - producto de farmacia`}
+                          className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300"
+                          alt={item.name}
                           src={item.image_url || item.image || 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&h=200&fit=crop'}
-                          onError={(e) => {
-                            // Si la imagen falla al cargar, usar una imagen por defecto
-                            e.target.src = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200&h=200&fit=crop';
-                          }}
                         />
                       </div>
 
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-800 mb-1">{item.name}</h3>
-                        <p className="text-sm text-gray-600 mb-2">{item.category}</p>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-gray-800 truncate text-sm sm:text-base">{item.name}</h3>
+                        <p className="text-xs text-indigo-500 font-semibold mb-2 uppercase">{item.category}</p>
 
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <span className="font-bold text-green-600">
+                          <div className="flex flex-col">
+                            <span className="font-bold text-indigo-600">
                               S/ {displayPrice.toFixed(2)}
                             </span>
                             {discount > 0 && (
-                              <span className="text-xs text-gray-400 line-through">
+                              <span className="text-[10px] text-gray-400 line-through">
                                 S/ {item.price.toFixed(2)}
                               </span>
                             )}
                           </div>
 
-                          <div className="flex items-center space-x-2">
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="w-8 h-8"
+                          <div className="flex items-center bg-gray-50 rounded-lg p-1 border border-gray-100">
+                            <button
                               onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                              className="p-1 hover:text-indigo-600 transition-colors disabled:opacity-30"
+                              disabled={item.quantity <= 1}
                             >
-                              <Minus className="w-4 h-4" />
-                            </Button>
-                            <span className="w-8 text-center font-medium">{item.quantity}</span>
-                            <Button
-                              variant="outline"
-                              size="icon"
-                              className="w-8 h-8"
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <span className="w-8 text-center text-xs font-bold text-gray-700">{item.quantity}</span>
+                            <button
                               onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                              className="p-1 hover:text-indigo-600 transition-colors"
                             >
-                              <Plus className="w-4 h-4" />
-                            </Button>
+                              <Plus className="w-3 h-3" />
+                            </button>
                           </div>
                         </div>
-
-                        {discount > 0 && (
-                          <div className="mt-2 text-xs text-green-600 font-medium">
-                            🎉 Descuento del {(discount * 100).toFixed(0)}% aplicado
-                          </div>
-                        )}
                       </div>
 
-                      <Button
-                        variant="ghost"
-                        size="icon"
+                      <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        className="text-gray-300 hover:text-red-500 transition-colors p-1"
                       >
                         <X className="w-4 h-4" />
-                      </Button>
+                      </button>
                     </div>
                   </motion.div>
                 );
@@ -181,50 +170,56 @@ const Cart = ({ cart, onClose, onRemoveItem, onUpdateQuantity, user }) => {
 
         {/* Footer */}
         {cart.length > 0 && (
-          <div className="border-t border-gray-200 p-6 bg-gray-50">
+          <div className="border-t border-gray-100 p-6 bg-gray-50/50 backdrop-blur-sm">
             {/* Shipping Info */}
-            <div className="flex items-center justify-between mb-4 p-3 bg-blue-50 rounded-lg">
+            <div className={`flex items-center justify-between mb-4 p-3 rounded-xl border ${shipping === 0 ? 'bg-indigo-50 border-indigo-100' : 'bg-gray-100 border-gray-200'}`}>
               <div className="flex items-center space-x-2">
-                <Truck className="w-5 h-5 text-blue-600" />
-                <span className="text-sm text-blue-800">
-                  {shipping === 0 ? 'Envío gratis' : `Envío: S/ ${shipping.toFixed(2)}`}
+                <Truck className={`w-5 h-5 ${shipping === 0 ? 'text-indigo-600' : 'text-gray-500'}`} />
+                <span className={`text-sm font-medium ${shipping === 0 ? 'text-indigo-800' : 'text-gray-600'}`}>
+                  {shipping === 0 ? '¡Envío Gratis!' : `Envío: S/ ${shipping.toFixed(2)}`}
                 </span>
               </div>
               {subtotal < 50 && (
-                <span className="text-xs text-blue-600">
-                  Compra S/ {(50 - subtotal).toFixed(2)} más para envío gratis
+                <span className="text-[10px] font-bold text-indigo-600 bg-white px-2 py-1 rounded-full shadow-sm">
+                  Faltan S/ {(50 - subtotal).toFixed(2)}
                 </span>
               )}
             </div>
 
             {/* Summary */}
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-gray-600">
-                <span>Subtotal:</span>
+            <div className="space-y-2 mb-6 px-1">
+              <div className="flex justify-between text-gray-500 text-sm">
+                <span>Subtotal</span>
                 <span>S/ {subtotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Envío:</span>
+              <div className="flex justify-between text-gray-500 text-sm">
+                <span>Gastos de envío</span>
                 <span>S/ {shipping.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-lg font-bold text-gray-800 border-t pt-2">
-                <span>Total:</span>
-                <span>S/ {total.toFixed(2)}</span>
+              <div className="flex justify-between text-xl font-black text-gray-900 border-t border-gray-200 pt-3 mt-2">
+                <span>Total</span>
+                <span className="text-indigo-600">S/ {total.toFixed(2)}</span>
               </div>
             </div>
 
             <Button
               onClick={handleCheckout}
               disabled={isCheckingOut}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-6 rounded-xl shadow-lg shadow-indigo-200 transition-all active:scale-[0.98]"
             >
-              <CreditCard className="w-5 h-5 mr-2" />
-              {isCheckingOut ? 'Procesando...' : 'Proceder al Pago'}
+              {isCheckingOut ? (
+                <span className="flex items-center italic">Procesando...</span>
+              ) : (
+                <span className="flex items-center justify-center">
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Pagar Ahora
+                </span>
+              )}
             </Button>
 
             {!user && (
-              <p className="text-xs text-gray-500 text-center mt-2">
-                Inicia sesión para obtener descuentos exclusivos
+              <p className="text-[11px] text-gray-400 text-center mt-4 font-medium uppercase tracking-tighter">
+                Accede a Club Angels para precios especiales
               </p>
             )}
           </div>
